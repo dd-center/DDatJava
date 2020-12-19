@@ -1,0 +1,14 @@
+package com.vtbs;
+
+import java.io.Serializable;
+
+public class JobResponse implements Serializable {
+
+    public JobResponse(String key, String data) {
+        this.key = key;
+        this.data = data;
+    }
+
+    private String key;
+    private String data;
+}
