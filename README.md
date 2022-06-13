@@ -7,9 +7,8 @@ DD@Home in Java
 
 ## Config File
 
-The following config is bundled with the jar file (default config file). If you
-are fine with the default config, you may run without specify a
-config file.
+You can find the config file at *./conf/config.yml* after first times launching.
+
 
 ```yaml
 #应用程序设置
