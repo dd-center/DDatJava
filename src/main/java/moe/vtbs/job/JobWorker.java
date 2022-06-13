@@ -1,4 +1,7 @@
-package com.vtbs;
+package moe.vtbs.job;
+
+import moe.vtbs.DDatJava;
+import moe.vtbs.DDatJava;
 
 public class JobWorker implements Runnable{
     @Override

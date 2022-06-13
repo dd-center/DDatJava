@@ -1,4 +1,4 @@
-package com.vtbs;
+package moe.vtbs.job;
 
 import java.io.Serializable;
 
