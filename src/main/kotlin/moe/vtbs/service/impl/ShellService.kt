@@ -16,10 +16,7 @@
  */
 package moe.vtbs.service.impl
 
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import moe.vtbs.service.AbstractService
 import moe.vtbs.shell.CommandSystem
 import java.util.Scanner
@@ -41,10 +38,14 @@ class ShellService : AbstractService() {
         scannerJob = CoroutineScope(Dispatchers.IO).launch {
             Scanner(System.`in`).use {
                 while (true) {
-                    it.nextLine().let {
-                        launch(Dispatchers.Default) {
-                            processor.onCommand(it)
+                    try {
+                        it.nextLine().let {
+                            launch(Dispatchers.Default) {
+                                processor.onCommand(it)
+                            }
                         }
+                    } catch (e: NoSuchElementException) {
+                        delay(250)
                     }
                 }
             }
