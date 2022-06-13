@@ -10,6 +10,7 @@ import org.apache.commons.io.IOUtils;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
+@Deprecated
 public class JobProcessor implements Runnable {
 
     private static final HttpTransport transport = new NetHttpTransport();

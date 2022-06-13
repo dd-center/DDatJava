@@ -7,6 +7,7 @@ import org.java_websocket.handshake.ServerHandshake;
 
 import java.net.URI;
 
+@Deprecated
 public class JobSocket extends WebSocketClient {
     public JobSocket(URI serverUri) {
         super(serverUri);
