@@ -10,7 +10,7 @@ use `java -jar DDatJava-[VERSION].jar`
 
 ### Developer Use
 
-There are may use way in [DDCore](src/main/kotlin/moe/vtbs/DDCore.kt) class.  
+There are many use way in [DDCore](src/main/kotlin/moe/vtbs/DDCore.kt) class.  
 If you think launch like the `Plain Launch`, see [Bootstrap.kt](src/main/kotlin/moe/vtbs/Bootstrap.kt) file.
 
 #### For Gradle
