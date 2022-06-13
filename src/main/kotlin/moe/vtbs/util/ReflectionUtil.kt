@@ -19,7 +19,6 @@ package moe.vtbs.util
 import kotlin.reflect.KClass
 import kotlin.reflect.KProperty1
 import kotlin.reflect.full.declaredMemberProperties
-import kotlin.reflect.full.memberProperties
 import kotlin.reflect.jvm.isAccessible
 
 /**

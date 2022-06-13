@@ -2,18 +2,15 @@ package moe.vtbs;
 
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;
-import kotlin.ReplaceWith;
 import moe.vtbs.job.JobSocket;
 import moe.vtbs.job.JobWorker;
 import org.java_websocket.client.WebSocketClient;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;

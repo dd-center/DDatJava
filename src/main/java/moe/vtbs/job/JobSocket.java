@@ -1,7 +1,6 @@
 package moe.vtbs.job;
 
 import moe.vtbs.DDatJava;
-import moe.vtbs.DDatJava;
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ServerHandshake;
 

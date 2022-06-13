@@ -18,10 +18,8 @@ package moe.vtbs.service.impl.distribution
 
 import kotlinx.coroutines.*
 import moe.vtbs.DDCore
-import moe.vtbs.config.Config
 import moe.vtbs.config.config
 import moe.vtbs.config.impl.GlobalConfig
-import moe.vtbs.job.JobProcessor
 import moe.vtbs.logger
 import moe.vtbs.network
 import moe.vtbs.service.impl.CenterServerDistributionService
@@ -29,7 +27,6 @@ import okhttp3.Request
 import okhttp3.Response
 import okhttp3.WebSocket
 import okhttp3.WebSocketListener
-import java.net.URL
 import java.net.URLEncoder
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException

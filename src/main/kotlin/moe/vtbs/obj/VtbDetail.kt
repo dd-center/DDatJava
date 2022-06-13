@@ -16,9 +16,9 @@
  */
 package moe.vtbs.obj
 
+import kotlinx.coroutines.runBlocking
 import moe.vtbs.lang.annotation.Blocked
 import moe.vtbs.util.Image
-import kotlinx.coroutines.runBlocking
 
 /**
  *  虚拟主播详情

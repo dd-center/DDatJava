@@ -19,15 +19,15 @@ If you think launch like the `Plain Launch`, see [Bootstrap.kt](src/main/kotlin/
    such as `git clone https://github.com/dd-center/DDatJava.git`
 2. run `gradlew publishToMavenLocal`  
    if you're using PowerShell, use `.\gradlew publishToMavenLocal`
-3. go to you project and open the `build.gradle`.
+3. go to your project and open the `build.gradle`.
 4. add `mavenLocal()` in your `repositories` scope.  
-   add `implementation("moe.vtbs:dd-home-api:1.1.0.0")`
+   add `implementation("moe.vtbs:dd-home-api:2.0.0")`
 5. sync your project.
 
 #### For Maven
 
 1. `For Gradle`'s step 1~2
-2. go to you project and open the `pom.xml`.
+2. go to your project and open the `pom.xml`.
 3. add this:
 
 ```xml
@@ -37,7 +37,7 @@ If you think launch like the `Plain Launch`, see [Bootstrap.kt](src/main/kotlin/
     <dependency>
         <groupId>moe.vtbs</groupId>
         <artifactId>dd-home-api</artifactId>
-        <version>1.1.0.0</version>
+        <version>2.0.0</version>
     </dependency>
     <!--Other...-->
 </dependencies>

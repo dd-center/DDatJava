@@ -1,14 +1,16 @@
 package moe.vtbs.ascii
 
+import moe.vtbs.shell.ascii.AsciiStringGroup
+import moe.vtbs.shell.ascii.Foreground
 import moe.vtbs.shell.ascii.Foreground.Companion.Black
 import moe.vtbs.shell.ascii.Foreground.Companion.Blue
+import moe.vtbs.shell.ascii.Foreground.Companion.Cyan
 import moe.vtbs.shell.ascii.Foreground.Companion.DarkBlue
 import moe.vtbs.shell.ascii.Foreground.Companion.DarkGreen
 import moe.vtbs.shell.ascii.Foreground.Companion.DarkRed
 import moe.vtbs.shell.ascii.Foreground.Companion.Gold
 import moe.vtbs.shell.ascii.Foreground.Companion.Gray
 import moe.vtbs.shell.ascii.Foreground.Companion.Green
-import moe.vtbs.shell.ascii.Foreground.Companion.Cyan
 import moe.vtbs.shell.ascii.Foreground.Companion.LightGray
 import moe.vtbs.shell.ascii.Foreground.Companion.Pink
 import moe.vtbs.shell.ascii.Foreground.Companion.Purple
@@ -16,14 +18,12 @@ import moe.vtbs.shell.ascii.Foreground.Companion.Red
 import moe.vtbs.shell.ascii.Foreground.Companion.Sky
 import moe.vtbs.shell.ascii.Foreground.Companion.White
 import moe.vtbs.shell.ascii.Foreground.Companion.Yellow
+import moe.vtbs.shell.ascii.Format
 import moe.vtbs.shell.ascii.Format.Companion.Flicker
 import moe.vtbs.shell.ascii.Format.Companion.Highlight
 import moe.vtbs.shell.ascii.Format.Companion.Italic
 import moe.vtbs.shell.ascii.Format.Companion.Strikethrough
 import moe.vtbs.shell.ascii.Format.Companion.Underline
-import moe.vtbs.shell.ascii.AsciiStringGroup
-import moe.vtbs.shell.ascii.Foreground
-import moe.vtbs.shell.ascii.Format
 
 /** 转为彩色文字，如未启用彩色文字，则返回正确的普通文字 */
 fun String.asAsciiColor(): AsciiStringGroup {

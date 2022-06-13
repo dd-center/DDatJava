@@ -5,7 +5,7 @@ import moe.vtbs.config.impl.GlobalConfig
 import moe.vtbs.lang.annotation.Blocked
 import moe.vtbs.service.impl.CenterServerDistributionService
 import moe.vtbs.service.impl.ShellService
-import java.util.Scanner
+import java.util.*
 import kotlin.system.exitProcess
 
 /**

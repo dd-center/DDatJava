@@ -19,7 +19,7 @@ package moe.vtbs.service.impl
 import kotlinx.coroutines.*
 import moe.vtbs.service.AbstractService
 import moe.vtbs.shell.CommandSystem
-import java.util.Scanner
+import java.util.*
 
 /**
  *  控制台服务

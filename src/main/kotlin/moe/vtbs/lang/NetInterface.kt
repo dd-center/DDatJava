@@ -17,13 +17,15 @@
 package moe.vtbs.lang
 
 import com.google.gson.Gson
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.suspendCancellableCoroutine
+import moe.vtbs.lang.annotation.Network
 import moe.vtbs.lang.exception.NetException
-import kotlinx.coroutines.*
 import okhttp3.*
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.RequestBody.Companion.toRequestBody
 import org.yaml.snakeyaml.Yaml
-import moe.vtbs.lang.annotation.Network
 import java.io.IOException
 import java.io.InputStream
 import kotlin.coroutines.CoroutineContext

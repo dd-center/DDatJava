@@ -1,7 +1,6 @@
 package moe.vtbs.job;
 
 import moe.vtbs.DDatJava;
-import moe.vtbs.DDatJava;
 
 @Deprecated
 public class JobWorker implements Runnable{

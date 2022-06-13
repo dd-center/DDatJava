@@ -17,13 +17,13 @@
 package moe.vtbs
 
 import com.google.gson.JsonParser
+import kotlinx.coroutines.runBlocking
 import moe.vtbs.lang.Context
 import moe.vtbs.lang.annotation.Blocked
 import moe.vtbs.lang.annotation.Network
 import moe.vtbs.lang.context
 import moe.vtbs.obj.SpaceInfo
 import moe.vtbs.obj.VtbDetail
-import kotlinx.coroutines.runBlocking
 import moe.vtbs.service.ServiceManager
 import moe.vtbs.shell.CommandSystem
 import org.slf4j.LoggerFactory
@@ -37,7 +37,7 @@ import org.slf4j.LoggerFactory
 object DDCore {
     /** 程序版本号 */
     @JvmStatic
-    val version = "1.1.0.0"
+    val version = "2.0.0"
 
     /** 程序运行路径 */
     @JvmStatic
