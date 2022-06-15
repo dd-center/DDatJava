@@ -1,7 +1,8 @@
-package com.vtbs;
+package moe.vtbs.job;
 
 import java.io.Serializable;
 
+@Deprecated
 public class JobRequest implements Serializable {
     private String key;
     private JobData data;
@@ -19,6 +20,7 @@ public class JobRequest implements Serializable {
     }
 }
 
+@Deprecated
 class JobData implements Serializable {
     private String type;
     private String url;

@@ -1,13 +1,15 @@
-package com.vtbs;
+package moe.vtbs.job;
 
 import com.google.api.client.http.*;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.gson.Gson;
+import moe.vtbs.DDatJava;
 import org.apache.commons.io.IOUtils;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
+@Deprecated
 public class JobProcessor implements Runnable {
 
     private static final HttpTransport transport = new NetHttpTransport();
