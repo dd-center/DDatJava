@@ -156,7 +156,7 @@ object DDCore {
     @JvmStatic
     @JvmBlockingBridge
     suspend fun getLivingVtbs(): IntArray {
-        return network.getJObject("https://api.tokyo.vtbs.moe/v1/living")
+        return network.getJObject("https://api.vtbs.moe/v1/living")
     }
 
     /**
@@ -167,7 +167,7 @@ object DDCore {
     @JvmStatic
     @JvmBlockingBridge
     suspend fun getVtbLivingRoomInfo(id: Int): VtbRoomInfo {
-        return network.getJObject("https://api.tokyo.vtbs.moe/v1/room/$id")
+        return network.getJObject("https://api.vtbs.moe/v1/room/$id")
     }
 
     /**

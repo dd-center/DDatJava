@@ -27,7 +27,7 @@ object Bootstrap {
         // 配置文件路径
         val path = config<GlobalConfig>().path()
         logger.info("${i18n.bootstrap.configFilePath}${path}")
-        val nickname = config<GlobalConfig>().app.nickname
+        val nickname = config<GlobalConfig>().distribution.nickname
         if (nickname == "<unset>") waitForSetANickName()
         val svc = service.set<CenterServerDistributionService>()
         svc.start()
@@ -43,7 +43,7 @@ object Bootstrap {
                 val name = it.nextLine()
                 if (name.trim().isNotEmpty()) {
                     config<GlobalConfig> {
-                        app.nickname = name
+                        distribution.nickname = name
                         save()
                     }
                     return

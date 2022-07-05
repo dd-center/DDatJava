@@ -102,7 +102,7 @@ class DistributionWorker(svc: CenterServerDistributionService) {
         val osVersion = System.getProperty("os.version")
         val osArch = System.getProperty("os.arch")
         val platform = URLEncoder.encode("$osName-$osVersion", "UTF-8") + "_$osArch"
-        val name = config<GlobalConfig, String> { URLEncoder.encode(app.nickname, "UTF-8") }
+        val name = config<GlobalConfig, String> { URLEncoder.encode(distribution.nickname, "UTF-8") }
 
         return """
             wss://cluster.vtbs.moe/

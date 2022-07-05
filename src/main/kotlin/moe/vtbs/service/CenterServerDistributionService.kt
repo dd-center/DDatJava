@@ -45,7 +45,7 @@ class CenterServerDistributionService : AbstractService() {
     override fun start() {
         distributionJob = CoroutineScope(Dispatchers.Default).launch {
             distribute()
-            val interval = config<GlobalConfig>().app.interval
+            val interval = config<GlobalConfig>().distribution.interval
             logger.info(i18n.service.distribution.start0.papi("time" to interval))
             delay(interval.seconds)
         }

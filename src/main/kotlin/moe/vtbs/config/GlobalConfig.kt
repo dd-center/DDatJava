@@ -36,10 +36,10 @@ class GlobalConfig : Config {
     )
     var language = "zh-cn"
 
-    @Comment("应用程序设置")
-    var app = App()
+    @Comment("Vtbs网站任务分发设置")
+    var distribution = Distribution()
 
-    class App {
+    class Distribution {
         @Comment(
             """
             操作间隔，单位为秒

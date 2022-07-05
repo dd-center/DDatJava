@@ -17,9 +17,6 @@ dependencies {
 
     implementation("com.google.code.gson:gson:2.9.0")
     implementation("org.slf4j:slf4j-log4j12:1.7.36")
-    implementation("com.typesafe:config:1.4.2")
-    implementation("org.java-websocket:Java-WebSocket:1.5.3")
-    implementation("com.google.http-client:google-http-client:1.42.0")
     implementation("commons-io:commons-io:2.11.0")
 
     implementation("org.yaml:snakeyaml:1.30")
