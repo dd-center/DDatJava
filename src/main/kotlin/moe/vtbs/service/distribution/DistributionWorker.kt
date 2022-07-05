@@ -14,15 +14,18 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see https://www.gnu.org/licenses/
  */
-package moe.vtbs.service.impl.distribution
+package moe.vtbs.service.distribution
 
 import kotlinx.coroutines.*
+import me.him188.kotlin.jvm.blocking.bridge.JvmBlockingBridge
 import moe.vtbs.DDCore
-import moe.vtbs.config.config
-import moe.vtbs.config.impl.GlobalConfig
+import moe.vtbs.lang.config.config
+import moe.vtbs.config.GlobalConfig
+import moe.vtbs.i18n
+import moe.vtbs.lang.config.PConfig
 import moe.vtbs.logger
 import moe.vtbs.network
-import moe.vtbs.service.impl.CenterServerDistributionService
+import moe.vtbs.service.CenterServerDistributionService
 import okhttp3.Request
 import okhttp3.Response
 import okhttp3.WebSocket
@@ -40,7 +43,7 @@ import kotlin.coroutines.resumeWithException
 class DistributionWorker(svc: CenterServerDistributionService) {
     val listener = object : WebSocketListener() {
         override fun onOpen(webSocket: WebSocket, response: Response) {
-            logger.info("WebSocket@DistributionWorker连接成功")
+            logger.info(i18n.service.distribution.worker.infoWsConnectSuccess)
             waitForOpenCallback?.resume(Unit)
         }
 
@@ -51,12 +54,12 @@ class DistributionWorker(svc: CenterServerDistributionService) {
         }
 
         override fun onClosed(webSocket: WebSocket, code: Int, reason: String) {
-            logger.info("WebSocket@DistributionWorker连接关闭")
+            logger.info(i18n.service.distribution.worker.infoWsConnectClose)
             this@DistributionWorker.webSocket = null;
         }
 
         override fun onFailure(webSocket: WebSocket, t: Throwable, response: Response?) {
-            logger.error("WebSocket@DistributionWorker连接失败", t)
+            logger.error(i18n.service.distribution.worker.errWsConnectFailure, t)
             waitForOpenCallback?.resumeWithException(t)
         }
     }
@@ -67,9 +70,10 @@ class DistributionWorker(svc: CenterServerDistributionService) {
     /**
      * 进行一次检查操作
      */
-    suspend fun workAsync() {
+    @JvmBlockingBridge
+    suspend fun work() {
         if (waitForOpenCallback != null) return
-        logger.debug("Requesting for a job...")
+        logger.debug(i18n.service.distribution.worker.infoRequestJob)
         if (webSocket == null) {
             val req = Request.Builder().url(createURL()).build()
             webSocket = network.okHttpClient.newWebSocket(req, listener)
@@ -78,7 +82,7 @@ class DistributionWorker(svc: CenterServerDistributionService) {
                     waitForOpenCallback = it
                 }
             } catch (e: Throwable) {
-                logger.error("Cannot open the distributing websocket. Waiting for next round", e)
+                logger.error(i18n.service.distribution.worker.errRequestFailure, e)
                 return
             } finally {
                 waitForOpenCallback = null
@@ -107,5 +111,13 @@ class DistributionWorker(svc: CenterServerDistributionService) {
             &platform=$platform
             &name=$name
             """.trimIndent().replace("\n", "")
+    }
+
+    class I18N(parent: PConfig?) : PConfig(parent) {
+        val infoRequestJob by notnull("正在请求新的任务……")
+        val errRequestFailure by notnull("请求任务失败，未能打开WebSocket，下个检查周期时将会继续")
+        val infoWsConnectSuccess by notnull("WebSocket@DistributionWorker连接成功！")
+        val infoWsConnectClose by notnull("WebSocket@DistributionWorker关闭。")
+        val errWsConnectFailure by notnull("WebSocket@DistributionWorker连接失败。")
     }
 }

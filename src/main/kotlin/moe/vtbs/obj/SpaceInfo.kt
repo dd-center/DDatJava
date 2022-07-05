@@ -17,7 +17,7 @@
 package moe.vtbs.obj
 
 import com.google.gson.JsonObject
-import moe.vtbs.lang.annotation.Blocked
+import me.him188.kotlin.jvm.blocking.bridge.JvmBlockingBridge
 import moe.vtbs.util.Image
 
 /**
@@ -50,10 +50,8 @@ class SpaceInfo(val json: JsonObject) {
     val userHonourInfo get() = data["user_honour_info"]
     val isFollowed get() = data["is_followed"].asBoolean
     val topPhoto get() = data["top_photo"].asString
-
-    @Blocked
-    fun getTopPhotoImage() = Image.getImage(topPhoto)
-    suspend fun getTopPhotoImageAsync() = Image.getImageAsync(topPhoto)
+    @JvmBlockingBridge
+    suspend fun getTopPhotoImage() = Image.getImage(topPhoto)
     val theme get() = data["theme"]
     val sysNotice get() = data["sys_notice"]
     val liveRoom = LiveRoom(data["live_room"].asJsonObject)
@@ -70,10 +68,8 @@ class SpaceInfo(val json: JsonObject) {
         val url get() = json["url"].asString
         val title get() = json["title"].asString
         val cover get() = json["cover"].asString
-
-        @Blocked
-        fun getCoverImage() = Image.getImage(cover)
-        suspend fun getCoverImageAsync() = Image.getImageAsync(cover)
+        @JvmBlockingBridge
+        suspend fun getCoverImageAsync() = Image.getImage(cover)
         val roomid get() = json["roomid"]
         val roundStatus get() = json["roundStatus"]
         val broadcastType get() = json["broadcast_type"]

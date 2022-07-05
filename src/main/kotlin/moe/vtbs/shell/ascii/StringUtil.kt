@@ -1,7 +1,5 @@
-package moe.vtbs.ascii
+package moe.vtbs.shell.ascii
 
-import moe.vtbs.shell.ascii.AsciiStringGroup
-import moe.vtbs.shell.ascii.Foreground
 import moe.vtbs.shell.ascii.Foreground.Companion.Black
 import moe.vtbs.shell.ascii.Foreground.Companion.Blue
 import moe.vtbs.shell.ascii.Foreground.Companion.Cyan
@@ -18,7 +16,6 @@ import moe.vtbs.shell.ascii.Foreground.Companion.Red
 import moe.vtbs.shell.ascii.Foreground.Companion.Sky
 import moe.vtbs.shell.ascii.Foreground.Companion.White
 import moe.vtbs.shell.ascii.Foreground.Companion.Yellow
-import moe.vtbs.shell.ascii.Format
 import moe.vtbs.shell.ascii.Format.Companion.Flicker
 import moe.vtbs.shell.ascii.Format.Companion.Highlight
 import moe.vtbs.shell.ascii.Format.Companion.Italic

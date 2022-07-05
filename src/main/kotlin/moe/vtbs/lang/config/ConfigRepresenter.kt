@@ -14,8 +14,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see https://www.gnu.org/licenses/
  */
-package moe.vtbs.config
+package moe.vtbs.lang.config
 
+import moe.vtbs.lang.annotation.Comment
 import org.yaml.snakeyaml.comments.CommentLine
 import org.yaml.snakeyaml.comments.CommentType
 import org.yaml.snakeyaml.introspector.Property

@@ -16,8 +16,7 @@
  */
 package moe.vtbs.obj
 
-import kotlinx.coroutines.runBlocking
-import moe.vtbs.lang.annotation.Blocked
+import me.him188.kotlin.jvm.blocking.bridge.JvmBlockingBridge
 import moe.vtbs.util.Image
 
 /**
@@ -62,10 +61,8 @@ class VtbDetail {
      * 头像
      */
     var face: String? = ""
-
-    @Blocked
-    fun getFaceImage() = runBlocking { getFaceImageAsync() }
-    suspend fun getFaceImageAsync() = Image.getImageAsync(face)
+    @JvmBlockingBridge
+    suspend fun getFaceImage() = Image.getImage(face)
 
     /**
      * 高级直播间号
@@ -77,9 +74,11 @@ class VtbDetail {
      */
     var topPhoto: String? = ""
 
-    @Blocked
-    fun getTopImage() = runBlocking { getTopImageAsync() }
-    suspend fun getTopImageAsync() = Image.getImageAsync(topPhoto)
+    /**
+     * 获取Banner图像
+     */
+    @JvmBlockingBridge
+    suspend fun getTopImage() = Image.getImage(topPhoto)
 
     /**
      *

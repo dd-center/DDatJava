@@ -16,6 +16,9 @@
  */
 package moe.vtbs.util
 
+import moe.vtbs.i18n
+import moe.vtbs.lang.config.PConfig
+import moe.vtbs.lang.papi
 import kotlin.reflect.KClass
 import kotlin.reflect.KProperty1
 import kotlin.reflect.full.declaredMemberProperties
@@ -77,6 +80,10 @@ object ReflectionUtil {
         clazz.kotlin.declaredMemberProperties.find { it.name == name }?.let {
             it.isAccessible = true
             return (it as KProperty1<Any, R>).get(this)
-        } ?: throw NoSuchMethodException("找不到属性${name}")
+        } ?: throw NoSuchMethodException(i18n.util.reflect.errPropertyNotFound.papi("name" to name))
+    }
+
+    class I18N(parent: PConfig?) : PConfig(parent) {
+        val errPropertyNotFound by notnull("找不到属性%name%")
     }
 }

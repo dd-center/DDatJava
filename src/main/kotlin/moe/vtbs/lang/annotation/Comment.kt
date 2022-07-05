@@ -1,4 +1,4 @@
-package moe.vtbs.config
+package moe.vtbs.lang.annotation
 
 /**
  *  注释

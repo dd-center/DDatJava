@@ -14,38 +14,22 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see https://www.gnu.org/licenses/
  */
-package moe.vtbs.service
+package moe.vtbs.lang.service
+
+//import androidx.annotation.CallSuper
 
 /**
- *  服务
+ *  抽象服务
  *
  * @author 一七年夏
- * @since 2022-05-15 19:40
+ * @since 2022-05-15 19:55
  */
-interface Service{
-    /**
-     * 服务初始化
-     */
-    fun init(manager: ServiceManager) = Unit
+abstract class AbstractService : Service {
+    lateinit var manager: ServiceManager
 
-    /**
-     * 服务启动
-     */
-    fun start() = Unit
-
-    /**
-     * 服务关闭
-     */
-    fun close() = Unit
-
-    /**
-     * 服务刷新
-     */
-    fun refresh() = Unit
-
-    /**
-     * 服务重载
-     */
-    fun reload() = Unit
-    val name: String
+    //@CallSuper
+    override fun init(manager: ServiceManager) {
+        super.init(manager)
+        this.manager = manager
+    }
 }

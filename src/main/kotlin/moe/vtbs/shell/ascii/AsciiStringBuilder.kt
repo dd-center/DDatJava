@@ -16,9 +16,6 @@
  */
 package moe.vtbs.shell.ascii
 
-import moe.vtbs.ascii.Ascii
-import moe.vtbs.ascii.AsciiString
-
 /**
  *  彩色文字文本构建器
  *

@@ -14,11 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see https://www.gnu.org/licenses/
  */
-package moe.vtbs.ascii
-
-import moe.vtbs.shell.ascii.Background
-import moe.vtbs.shell.ascii.Foreground
-import moe.vtbs.shell.ascii.Format
+package moe.vtbs.shell.ascii
 
 /**
  *  控制台彩色文本
@@ -31,7 +27,7 @@ class AsciiString(
     var foreground: Foreground? = null,
     var background: Background? = null,
     var format: MutableList<Format> = mutableListOf()
-) : Ascii{
+) : Ascii {
     companion object {
         val Default get() = AsciiString("")
     }

@@ -1,4 +1,4 @@
-package moe.vtbs.config
+package moe.vtbs.lang.config
 
 /**
  *  配置文件路径

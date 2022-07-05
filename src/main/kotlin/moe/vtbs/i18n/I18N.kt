@@ -14,22 +14,30 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see https://www.gnu.org/licenses/
  */
-package moe.vtbs.service
+package moe.vtbs.i18n
 
-import androidx.annotation.CallSuper
+import moe.vtbs.Bootstrap
+import moe.vtbs.lang.config.PConfig
+import moe.vtbs.lang.service.ServiceManager
+import moe.vtbs.shell.CommandSystem
+import moe.vtbs.util.Image
+import moe.vtbs.util.ReflectionUtil
 
 /**
- *  抽象服务
+ *  I18N
  *
  * @author 一七年夏
- * @since 2022-05-15 19:55
+ * @since 2022-07-05 14:33
  */
-abstract class AbstractService : Service {
-    lateinit var manager: ServiceManager
+class I18N(parent: PConfig?) : PConfig(parent) {
+    val languageID by notnull("zh-cn")
+    val bootstrap = Bootstrap.I18N(this)
+    val service = ServiceManager.I18N(this)
+    val shell = CommandSystem.I18N(this)
+    val util = UtilI18N(this)
 
-    @CallSuper
-    override fun init(manager: ServiceManager) {
-        super.init(manager)
-        this.manager = manager
+    class UtilI18N(parent: PConfig?) : PConfig(parent) {
+        val image = Image.I18N(this)
+        val reflect = ReflectionUtil.I18N(this)
     }
 }

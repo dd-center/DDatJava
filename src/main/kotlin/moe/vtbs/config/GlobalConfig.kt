@@ -14,11 +14,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see https://www.gnu.org/licenses/
  */
-package moe.vtbs.config.impl
+package moe.vtbs.config
 
-import moe.vtbs.config.Comment
-import moe.vtbs.config.Config
-import moe.vtbs.config.ConfigPath
+import moe.vtbs.lang.annotation.Comment
+import moe.vtbs.lang.config.Config
+import moe.vtbs.lang.config.ConfigPath
 
 /**
  *  全局配置
@@ -28,6 +28,14 @@ import moe.vtbs.config.ConfigPath
  */
 @ConfigPath("config.yml")
 class GlobalConfig : Config {
+    @Comment(
+        """
+        Language. Such as: zh-cn, en-us
+        If you want to use another language, please place the "<languageName>.ini" file under Classpath://lang/
+        """
+    )
+    var language = "zh-cn"
+
     @Comment("应用程序设置")
     var app = App()
 

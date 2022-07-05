@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see https://www.gnu.org/licenses/
  */
-package moe.vtbs.config
+package moe.vtbs.lang.config
 
 import moe.vtbs.lang.context
 import org.yaml.snakeyaml.DumperOptions
@@ -78,6 +78,13 @@ interface Config {
     fun load() = loadConfig(this::class.java)
 
     fun path() = getConfigFile(this::class.java)
+}
+
+/**
+ * 获取配置文件
+ */
+inline fun <reified T : Config> config(): T {
+    return Config.getConfig(T::class.java)
 }
 
 /**

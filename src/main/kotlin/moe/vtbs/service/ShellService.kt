@@ -14,10 +14,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see https://www.gnu.org/licenses/
  */
-package moe.vtbs.service.impl
+package moe.vtbs.service
 
 import kotlinx.coroutines.*
-import moe.vtbs.service.AbstractService
+import moe.vtbs.i18n
+import moe.vtbs.lang.config.PConfig
+import moe.vtbs.lang.service.AbstractService
 import moe.vtbs.shell.CommandSystem
 import java.util.*
 
@@ -28,7 +30,7 @@ import java.util.*
  * @since 2022-06-13 13:15
  */
 class ShellService : AbstractService() {
-    override val name: String = "控制台服务"
+    override val name: String = i18n.service.shell.title
 
     val processor = CommandSystem()
     private var scannerJob: Job? = null;
@@ -56,5 +58,9 @@ class ShellService : AbstractService() {
     override fun close() {
         scanner?.close()
         scannerJob?.cancel()
+    }
+
+    class I18N(parent: PConfig?) : PConfig(parent) {
+        val title by notnull("控制台服务")
     }
 }

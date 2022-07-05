@@ -14,15 +14,20 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see https://www.gnu.org/licenses/
  */
-package moe.vtbs.service.impl
+package moe.vtbs.service
 
 import kotlinx.coroutines.*
-import moe.vtbs.config.config
-import moe.vtbs.config.impl.GlobalConfig
-import moe.vtbs.lang.annotation.Blocked
+import me.him188.kotlin.jvm.blocking.bridge.JvmBlockingBridge
+import moe.vtbs.lang.config.PConfig
+import moe.vtbs.lang.config.config
+import moe.vtbs.config.GlobalConfig
+import moe.vtbs.i18n
+import moe.vtbs.lang.papi
 import moe.vtbs.logger
-import moe.vtbs.service.AbstractService
-import moe.vtbs.service.impl.distribution.DistributionWorker
+import moe.vtbs.lang.service.AbstractService
+import moe.vtbs.service.distribution.DistributionProcessor
+import moe.vtbs.service.distribution.DistributionWorker
+import kotlin.time.Duration.Companion.seconds
 
 /**
  *  vtbs.moe的分布式操作服务
@@ -32,7 +37,7 @@ import moe.vtbs.service.impl.distribution.DistributionWorker
  */
 class CenterServerDistributionService : AbstractService() {
     override val name: String
-        get() = "VtbsMoe中央服务器分布式操作服务"
+        get() = i18n.service.distribution.title
 
     var distributionJob: Job? = null
     val worker = DistributionWorker(this)
@@ -40,28 +45,22 @@ class CenterServerDistributionService : AbstractService() {
     override fun start() {
         distributionJob = CoroutineScope(Dispatchers.Default).launch {
             distribute()
-            config<GlobalConfig> {
-                logger.info("操作结束，下次操作将在${app.interval}秒后执行")
-                delay(app.interval * 1000)
-            }
+            val interval = config<GlobalConfig>().app.interval
+            logger.info(i18n.service.distribution.start0.papi("time" to interval))
+            delay(interval.seconds)
         }
     }
 
     override fun close() {
         distributionJob?.cancel()
-        worker.webSocket?.close(1000, "客户端服务关闭")
+        worker.webSocket?.close(1000, i18n.service.distribution.close0)
     }
 
     /**
      * 等待服务退出
      */
-    @Blocked
-    fun waitFor() = runBlocking { waitForAsync() }
-
-    /**
-     * 等待服务退出
-     */
-    suspend fun waitForAsync() {
+    @JvmBlockingBridge
+    suspend fun waitFor() {
         distributionJob?.join()
     }
 
@@ -69,6 +68,14 @@ class CenterServerDistributionService : AbstractService() {
      * 检查分发任务
      */
     private suspend fun distribute() {
-        worker.workAsync()
+        worker.work()
+    }
+
+    class I18N(parent: PConfig?) : PConfig(parent) {
+        val processor = DistributionProcessor.I18N(this)
+        val worker = DistributionWorker.I18N(this)
+        val title by notnull("VtbsMoe中央服务器分布式操作服务")
+        val start0 by notnull("操作结束，下次操作将在%time%秒后执行")
+        val close0 by notnull("客户端服务关闭")
     }
 }

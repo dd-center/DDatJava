@@ -14,9 +14,14 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see https://www.gnu.org/licenses/
  */
-package moe.vtbs.service
+package moe.vtbs.lang.service
 
+import moe.vtbs.lang.config.PConfig
+import moe.vtbs.i18n
+import moe.vtbs.lang.papi
 import moe.vtbs.logger
+import moe.vtbs.service.CenterServerDistributionService
+import moe.vtbs.service.ShellService
 
 /**
  *  服务管理器
@@ -48,11 +53,18 @@ class ServiceManager {
      */
     @Suppress("UNCHECKED_CAST")
     operator fun <T : Service> set(clazz: Class<T>, service: T) {
-        require(Service::class.java.isAssignableFrom(clazz)) { "${clazz}不是${Service::class.java}" }
-        require(!services.containsKey(clazz as Class<Service>)) { "服务已经被注册了" }
+        require(Service::class.java.isAssignableFrom(clazz)) {
+            // 0 不是 1
+            i18n.service.setNotAs.papi(0 to clazz, 1 to Service::class.java)
+        }
+        require(!services.containsKey(clazz as Class<Service>)) {
+            // 服务已被设置
+            i18n.service.setHasBeenSet.papi(0 to clazz.name)
+        }
         service.init(this)
         services[clazz] = service
-        logger.info("成功的注册了${service.name}(${clazz})")
+        //服务设置成功
+        logger.info(i18n.service.setSuccess.papi("name" to service.name, "class" to clazz.name))
     }
 
     /**
@@ -60,10 +72,13 @@ class ServiceManager {
      */
     @Suppress("UNCHECKED_CAST")
     fun <T : Service> set(service: T) {
-        require(!services.containsKey(service::class.java as Class<Service>)) { "服务已经被注册了" }
+        require(!services.containsKey(service::class.java as Class<Service>)) {
+            i18n.service.setHasBeenSet.papi(0 to service::class.java)
+        }
         service.init(this)
         services[service.javaClass] = service
-        logger.info("成功的注册了${service.name}(${service::class.java})")
+        //服务设置成功
+        logger.info(i18n.service.setSuccess.papi("name" to service.name, "class" to service.javaClass.name))
     }
 
     /**
@@ -76,7 +91,9 @@ class ServiceManager {
      */
     @Suppress("UNCHECKED_CAST")
     fun <T : Service> set(clazz: Class<T>): T {
-        require(!services.containsKey(clazz as Class<Service>)) { "服务已经被注册了" }
+        require(!services.containsKey(clazz as Class<Service>)) {
+            i18n.service.setHasBeenSet.papi(0 to clazz)
+        }
         val instance = clazz.getConstructor().newInstance()
         set(clazz, instance)
         return instance as T
@@ -104,7 +121,7 @@ class ServiceManager {
     @Suppress("UNCHECKED_CAST")
     fun <T : Service> disable(type: Class<T>): Boolean {
         val service = services[type as Class<Service>] ?: return false
-        logger.info("正在关闭服务${service.name}")
+        logger.info(i18n.service.disableRunning.papi(0 to service.name))
         try {
             service.close()
         } catch (e: Throwable) {
@@ -119,5 +136,15 @@ class ServiceManager {
      */
     inline fun <reified T : Service> disable(): Boolean {
         return disable(T::class.java)
+    }
+
+    class I18N(parent: PConfig?) : PConfig(parent) {
+        val setNotAs by notnull("%0%不是%1%")
+        val setHasBeenSet by notnull("服务%0%已经被注册了")
+        val setSuccess by notnull("成功的注册了%name%(%class%)")
+        val disableRunning by notnull("正在关闭服务%0%")
+
+        val distribution = CenterServerDistributionService.I18N(this)
+        val shell = ShellService.I18N(this)
     }
 }

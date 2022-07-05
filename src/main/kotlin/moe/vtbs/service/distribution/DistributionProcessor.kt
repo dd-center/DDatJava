@@ -14,13 +14,16 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see https://www.gnu.org/licenses/
  */
-package moe.vtbs.service.impl.distribution
+package moe.vtbs.service.distribution
 
 import com.google.gson.Gson
 import kotlinx.coroutines.*
+import moe.vtbs.i18n
 import moe.vtbs.job.JobRequest
 import moe.vtbs.job.JobResponse
 import moe.vtbs.lang.NetInterface
+import moe.vtbs.lang.config.PConfig
+import moe.vtbs.lang.papi
 import moe.vtbs.logger
 import moe.vtbs.network
 import okhttp3.*
@@ -45,7 +48,7 @@ object DistributionProcessor {
     suspend fun process(text: String, webSocket: WebSocket) {
         val jobInfo = gson.fromJson(text, JobRequest::class.java)
         if (jobInfo.isValidJob) {
-            logger.info("Job coming in! Key:${jobInfo.key}")
+            logger.info(i18n.service.distribution.processor.infoProcessComing.papi("key" to jobInfo.key))
             val content = getString(jobInfo.url)?.let {
                 gson.toJson(JobResponse(jobInfo.key, it))
             } ?: """{"key":"${jobInfo.key}", "data": "ERROR!"}"""
@@ -65,7 +68,7 @@ object DistributionProcessor {
                 header("User-Agent", userAgent)
             }.build()
             val call = network.okHttpClient.newCall(request)
-            val resp = suspendCancellableCoroutine<Response> { sc ->
+            val resp = suspendCancellableCoroutine { sc ->
                 call.enqueue(object : Callback {
                     override fun onFailure(call: Call, e: IOException) {
                         sc.resumeWithException(e)
@@ -82,7 +85,7 @@ object DistributionProcessor {
                 withContext(Dispatchers.IO) { it.body!!.string() }
             }
         } catch (e: Throwable) {
-            logger.error("未能获取数据", e)
+            logger.error(i18n.service.distribution.processor.errGetData, e)
             return null
         }
     }
@@ -95,7 +98,9 @@ object DistributionProcessor {
         withContext(Dispatchers.IO) {
             var size: Int? = null;
             while (true) {
-                if (!this.isActive) throw IllegalStateException("WebSocket was closed!")
+                if (!this.isActive) {
+                    throw IllegalStateException(i18n.service.distribution.processor.errWebSocketClosed)
+                }
                 if (size == null) size = str.toByteArray().size
                 // OKHTTP 的WebSocket有缓冲区，超了等着。
                 if (webSocket.queueSize() + size > 16777216) {
@@ -106,5 +111,11 @@ object DistributionProcessor {
                 size = null
             }
         }
+    }
+
+    class I18N(parent: PConfig?) : PConfig(parent) {
+        val errWebSocketClosed by notnull("WebSocket被关闭了！")
+        val errGetData by notnull("未能获取数据")
+        val infoProcessComing by notnull("收到任务，键值为：%key%")
     }
 }

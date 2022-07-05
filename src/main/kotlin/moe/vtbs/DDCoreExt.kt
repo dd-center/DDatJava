@@ -16,6 +16,7 @@
  */
 package moe.vtbs
 
+import moe.vtbs.i18n.I18NConfigRoot
 import moe.vtbs.lang.NetInterface
 
 /**
@@ -28,3 +29,4 @@ import moe.vtbs.lang.NetInterface
 val logger by DDCore::logger
 val network = NetInterface()
 val service by DDCore::service
+val i18n get() = I18NConfigRoot.i18n
