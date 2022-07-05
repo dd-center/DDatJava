@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see https://www.gnu.org/licenses/
  */
-package moe.vtbs.obj
+package moe.vtbs.obj.v1
 
 import me.him188.kotlin.jvm.blocking.bridge.JvmBlockingBridge
 import moe.vtbs.util.Image
