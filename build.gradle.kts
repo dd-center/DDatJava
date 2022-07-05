@@ -7,7 +7,7 @@ plugins {
 apply(plugin = "moe.vtbs.build.i18n")
 
 group = "moe.vtbs"
-version = "2.0.0"
+version = "2.1.0"
 
 dependencies {
     testImplementation(kotlin("test"))

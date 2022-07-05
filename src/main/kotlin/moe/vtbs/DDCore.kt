@@ -39,7 +39,7 @@ import org.slf4j.LoggerFactory
 object DDCore {
     /** 程序版本号 */
     @JvmStatic
-    val version = "2.0.0"
+    val version = "2.1.0"
 
     /** 程序运行路径 */
     @JvmStatic
