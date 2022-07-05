@@ -19,8 +19,6 @@ package moe.vtbs.service.distribution
 import com.google.gson.Gson
 import kotlinx.coroutines.*
 import moe.vtbs.i18n
-import moe.vtbs.job.JobRequest
-import moe.vtbs.job.JobResponse
 import moe.vtbs.lang.NetInterface
 import moe.vtbs.lang.config.PConfig
 import moe.vtbs.lang.papi
@@ -39,20 +37,20 @@ import kotlin.coroutines.resumeWithException
  */
 object DistributionProcessor {
     val gson = Gson()
-    val userAgent =
+    const val userAgent =
         "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0.2 Safari/605.1.15"
 
     /**
      * 处理由中央服务器传来的操作
      */
     suspend fun process(text: String, webSocket: WebSocket) {
-        val jobInfo = gson.fromJson(text, JobRequest::class.java)
+        val jobInfo = gson.fromJson(text, DistributionReq::class.java)
         if (jobInfo.isValidJob) {
             logger.info(i18n.service.distribution.processor.infoProcessComing.papi("key" to jobInfo.key))
-            val content = getString(jobInfo.url)?.let {
-                gson.toJson(JobResponse(jobInfo.key, it))
-            } ?: """{"key":"${jobInfo.key}", "data": "ERROR!"}"""
-            sendTo(content, webSocket)
+            val bean = DistributionResp()
+            bean.key = jobInfo.key
+            bean.data = getString(jobInfo.url) ?: "ERROR!"
+            sendTo(gson.toJson(bean), webSocket)
         }
     }
 
