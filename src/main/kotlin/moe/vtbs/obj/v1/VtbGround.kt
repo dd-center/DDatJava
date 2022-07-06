@@ -14,23 +14,37 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see https://www.gnu.org/licenses/
  */
-package moe.vtbs.shell.ascii
+package moe.vtbs.obj.v1
+
+import com.google.gson.annotations.SerializedName
 
 /**
- *  Ascii彩色文字组
+ *  Vtuber的舰长信息
  *
  * @author 一七年夏
- * @since 2022-05-17 12:30
+ * @since 2022-07-05 19:37
  */
-class AsciiStringGroup(
-    strings: List<AsciiString> = emptyList()
-) : List<AsciiString> by strings.toList(), Ascii {
-    private val strings = strings.toList()
-    override fun toAsciiString(): String {
-        return strings.joinToString { it.toAsciiString() }
-    }
+class VtbGround {
+    var mid = 0
 
-    override fun toString(): String {
-        return strings.joinToString { it.content }
+    @SerializedName("uname")
+    var userName = ""
+    var face = ""
+
+    @SerializedName("level")
+    private var level0 = 0
+
+    val level
+        get() = when (level0) {
+            0 -> Level.Governor
+            1 -> Level.Admiral
+            2 -> Level.Captain
+            else -> throw IllegalArgumentException("未知的舰长类型${level0}")
+        }
+
+    enum class Level {
+        Governor, //总督
+        Admiral, //提督
+        Captain //舰长
     }
 }

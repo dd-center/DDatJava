@@ -14,23 +14,30 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see https://www.gnu.org/licenses/
  */
-package moe.vtbs.shell.ascii
+package moe.vtbs.i18n
+
+import moe.vtbs.Bootstrap
+import moe.vtbs.lang.config.PConfig
+import moe.vtbs.lang.service.ServiceManager
+import moe.vtbs.shell.CommandSystem
+import moe.vtbs.util.Image
+import moe.vtbs.util.ReflectionUtil
 
 /**
- *  Ascii彩色文字组
+ *  I18N
  *
  * @author 一七年夏
- * @since 2022-05-17 12:30
+ * @since 2022-07-05 14:33
  */
-class AsciiStringGroup(
-    strings: List<AsciiString> = emptyList()
-) : List<AsciiString> by strings.toList(), Ascii {
-    private val strings = strings.toList()
-    override fun toAsciiString(): String {
-        return strings.joinToString { it.toAsciiString() }
-    }
+class I18N(parent: PConfig?) : PConfig(parent) {
+    val languageID by notnull("zh-cn")
+    val bootstrap = Bootstrap.I18N(this)
+    val service = ServiceManager.I18N(this)
+    val shell = CommandSystem.I18N(this)
+    val util = UtilI18N(this)
 
-    override fun toString(): String {
-        return strings.joinToString { it.content }
+    class UtilI18N(parent: PConfig?) : PConfig(parent) {
+        val image = Image.I18N(this)
+        val reflect = ReflectionUtil.I18N(this)
     }
 }

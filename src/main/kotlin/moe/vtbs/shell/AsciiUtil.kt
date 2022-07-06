@@ -16,7 +16,7 @@
  */
 package moe.vtbs.shell
 
-import moe.vtbs.ascii.AsciiString
+import moe.vtbs.shell.ascii.AsciiString
 import moe.vtbs.shell.ascii.AsciiStringBuilder
 import moe.vtbs.shell.ascii.Foreground
 import moe.vtbs.shell.ascii.Format

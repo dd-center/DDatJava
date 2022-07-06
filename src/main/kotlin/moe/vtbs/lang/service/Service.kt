@@ -14,23 +14,38 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see https://www.gnu.org/licenses/
  */
-package moe.vtbs.shell.ascii
+package moe.vtbs.lang.service
 
 /**
- *  Ascii彩色文字组
+ *  服务
  *
  * @author 一七年夏
- * @since 2022-05-17 12:30
+ * @since 2022-05-15 19:40
  */
-class AsciiStringGroup(
-    strings: List<AsciiString> = emptyList()
-) : List<AsciiString> by strings.toList(), Ascii {
-    private val strings = strings.toList()
-    override fun toAsciiString(): String {
-        return strings.joinToString { it.toAsciiString() }
-    }
+interface Service{
+    /**
+     * 服务初始化
+     */
+    fun init(manager: ServiceManager) = Unit
 
-    override fun toString(): String {
-        return strings.joinToString { it.content }
-    }
+    /**
+     * 服务启动
+     */
+    fun start() = Unit
+
+    /**
+     * 服务关闭
+     */
+    fun close() = Unit
+
+    /**
+     * 服务刷新
+     */
+    fun refresh() = Unit
+
+    /**
+     * 服务重载
+     */
+    fun reload() = Unit
+    val name: String
 }

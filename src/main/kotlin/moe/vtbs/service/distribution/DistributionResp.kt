@@ -14,23 +14,21 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see https://www.gnu.org/licenses/
  */
-package moe.vtbs.shell.ascii
+package moe.vtbs.service.distribution
 
 /**
- *  Ascii彩色文字组
+ *  JobResponse
  *
  * @author 一七年夏
- * @since 2022-05-17 12:30
+ * @since 2022-07-05 17:34
  */
-class AsciiStringGroup(
-    strings: List<AsciiString> = emptyList()
-) : List<AsciiString> by strings.toList(), Ascii {
-    private val strings = strings.toList()
-    override fun toAsciiString(): String {
-        return strings.joinToString { it.toAsciiString() }
+class DistributionResp {
+    constructor()
+    constructor(key: String, data: String) {
+        this.key = key
+        this.data = data
     }
 
-    override fun toString(): String {
-        return strings.joinToString { it.content }
-    }
+    var key = ""
+    var data = ""
 }

@@ -14,23 +14,25 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see https://www.gnu.org/licenses/
  */
-package moe.vtbs.shell.ascii
+package moe.vtbs.service.distribution
+
+import java.io.Serializable
 
 /**
- *  Ascii彩色文字组
+ *  DistributionReq
  *
  * @author 一七年夏
- * @since 2022-05-17 12:30
+ * @since 2022-07-05 17:41
  */
-class AsciiStringGroup(
-    strings: List<AsciiString> = emptyList()
-) : List<AsciiString> by strings.toList(), Ascii {
-    private val strings = strings.toList()
-    override fun toAsciiString(): String {
-        return strings.joinToString { it.toAsciiString() }
-    }
+class DistributionReq {
+    var data: JobData = JobData()
+    var key: String = ""
 
-    override fun toString(): String {
-        return strings.joinToString { it.content }
+    val url: String by data::url
+    val isValidJob: Boolean get() = data.type == "http"
+
+    class JobData : Serializable {
+        var type: String = ""
+        var url: String = ""
     }
 }

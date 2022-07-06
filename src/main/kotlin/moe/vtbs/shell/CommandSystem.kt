@@ -16,6 +16,9 @@
  */
 package moe.vtbs.shell
 
+import moe.vtbs.i18n
+import moe.vtbs.lang.config.PConfig
+import moe.vtbs.lang.papi
 import moe.vtbs.logger
 import java.util.regex.Pattern
 
@@ -31,10 +34,10 @@ open class CommandSystem : ICommandAdapter {
 
     fun start() {
         if (running) {
-            logger.warn("命令系统已经启动过一次了")
+            logger.warn(i18n.shell.wasStarted)
             return
         };
-        logger.info("命令系统成功启动，键入 “?” 或 “help” 以获取使用帮助，键入“{父指令} ? [子指令]”以查看子指令的帮助")
+        logger.info(i18n.shell.startHelp)
     }
 
     fun onCommand(command: String) {
@@ -55,8 +58,13 @@ open class CommandSystem : ICommandAdapter {
                 command.next()
                 val key = command.nextArg();
                 val listener: ICommandListener? = getChildrenMap()[key];
-                if (listener != null) logger.info("指令“$before$key”的帮助信息\n${listener.getHelp()}")
-                else logger.warn("不存在“$before$key”这个指令");
+                if (listener != null) logger.info(
+                    i18n.shell.showHelp0.papi(
+                        "command" to "$before$key",
+                        "message" to listener.getHelp()
+                    )
+                )
+                else logger.warn(i18n.shell.showHelp1.papi("command" to "$before$key"))
             }
         }
     }
@@ -78,5 +86,12 @@ open class CommandSystem : ICommandAdapter {
 
     override fun getListenKey(): String {
         return commandAdapter.getListenKey()
+    }
+
+    class I18N(parent: PConfig?) : PConfig(parent) {
+        val wasStarted by notnull("命令系统已经启动过一次了")
+        val startHelp by notnull("命令系统成功启动，键入 “?” 或 “help” 以获取使用帮助，键入“{父指令} ? [子指令]”以查看子指令的帮助")
+        val showHelp0 by notnull("指令“%command%”的帮助信息\n%message%")
+        val showHelp1 by notnull("不存在“%command%”这个指令")
     }
 }

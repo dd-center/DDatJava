@@ -30,7 +30,7 @@ interface ICommandAdapter : ICommandListener {
     companion object {
         private val hasAscii: Boolean by lazy {
             try {
-                Class.forName("moe.vtbs.ascii.AsciiString")
+                Class.forName("moe.vtbs.shell.ascii.AsciiString")
                 return@lazy true
             } catch (e: Throwable) {
                 return@lazy false

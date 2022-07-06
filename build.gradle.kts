@@ -1,23 +1,13 @@
-buildscript {
-    repositories {
-        maven { url = uri("https://maven.aliyun.com/repository/gradle-plugin") }
-    }
+plugins {
+    kotlin("jvm") version "1.7.0"
+    `maven-publish`
+    id("me.him188.kotlin-jvm-blocking-bridge") version "2.1.0-170.1"
 }
 
-plugins {
-    kotlin("jvm") version "1.6.20"
-    `maven-publish`
-}
+apply(plugin = "moe.vtbs.build.i18n")
 
 group = "moe.vtbs"
-version = "2.0.0"
-
-repositories {
-    maven { url = uri("https://maven.aliyun.com/repository/central") }
-    maven { url = uri("https://maven.aliyun.com/repository/public") }
-    mavenCentral()
-    google()
-}
+version = "2.1.0"
 
 dependencies {
     testImplementation(kotlin("test"))
@@ -27,14 +17,11 @@ dependencies {
 
     implementation("com.google.code.gson:gson:2.9.0")
     implementation("org.slf4j:slf4j-log4j12:1.7.36")
-    implementation("com.typesafe:config:1.4.2")
-    implementation("org.java-websocket:Java-WebSocket:1.5.3")
-    implementation("com.google.http-client:google-http-client:1.42.0")
     implementation("commons-io:commons-io:2.11.0")
 
     implementation("org.yaml:snakeyaml:1.30")
-    implementation("com.squareup.okhttp3:okhttp:4.9.3")
-    implementation("androidx.annotation:annotation:1.3.0")
+    implementation("com.squareup.okhttp3:okhttp:4.10.0")
+    //compileOnly("androidx.annotation:annotation:1.4.0")
 
     //kotlin
     implementation(kotlin("stdlib"))
@@ -62,7 +49,6 @@ tasks.test {
 
 tasks.jar {
     archiveFileName.set("${project.name}-${project.version}-api.jar")
-    finalizedBy(tasks["fatJar"])
 }
 
 task<Jar>("fatJar") {
@@ -73,6 +59,7 @@ task<Jar>("fatJar") {
     archiveFileName.set("${project.name}-${project.version}.jar")
     from(zipTree(tasks.jar.get().archiveFile.get().asFile))
     from(configurations.runtimeClasspath.get().files.map { if (it.isDirectory) it else zipTree(it) })
+    tasks["i18nJar"].finalizedBy(this)
 }
 
 task<Jar>("sourcesJar") {

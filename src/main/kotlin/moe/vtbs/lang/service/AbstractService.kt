@@ -14,23 +14,22 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see https://www.gnu.org/licenses/
  */
-package moe.vtbs.shell.ascii
+package moe.vtbs.lang.service
+
+//import androidx.annotation.CallSuper
 
 /**
- *  Ascii彩色文字组
+ *  抽象服务
  *
  * @author 一七年夏
- * @since 2022-05-17 12:30
+ * @since 2022-05-15 19:55
  */
-class AsciiStringGroup(
-    strings: List<AsciiString> = emptyList()
-) : List<AsciiString> by strings.toList(), Ascii {
-    private val strings = strings.toList()
-    override fun toAsciiString(): String {
-        return strings.joinToString { it.toAsciiString() }
-    }
+abstract class AbstractService : Service {
+    lateinit var manager: ServiceManager
 
-    override fun toString(): String {
-        return strings.joinToString { it.content }
+    //@CallSuper
+    override fun init(manager: ServiceManager) {
+        super.init(manager)
+        this.manager = manager
     }
 }

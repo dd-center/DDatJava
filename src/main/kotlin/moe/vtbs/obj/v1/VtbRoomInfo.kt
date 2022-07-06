@@ -14,23 +14,21 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see https://www.gnu.org/licenses/
  */
-package moe.vtbs.shell.ascii
+package moe.vtbs.obj.v1
+
+import com.google.gson.annotations.SerializedName
 
 /**
- *  Ascii彩色文字组
+ *  Vtuber直播间信息
  *
  * @author 一七年夏
- * @since 2022-05-17 12:30
+ * @since 2022-07-05 19:47
  */
-class AsciiStringGroup(
-    strings: List<AsciiString> = emptyList()
-) : List<AsciiString> by strings.toList(), Ascii {
-    private val strings = strings.toList()
-    override fun toAsciiString(): String {
-        return strings.joinToString { it.toAsciiString() }
-    }
+class VtbRoomInfo {
+    var uid = 0
+    var roomId = ""
+    var title = ""
 
-    override fun toString(): String {
-        return strings.joinToString { it.content }
-    }
+    @SerializedName("live_tile")
+    var liveTime = 0L
 }
